@@ -1,0 +1,78 @@
+{
+    parserClass="dev.jstanger.language.parser.CornParser"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="Corn"
+    psiImplClassSuffix="Impl"
+    psiPackage="dev.jstanger.language.psi"
+    psiImplPackage="dev.jstanger.language.psi.impl"
+
+    elementTypeHolderClass="dev.jstanger.language.psi.CornTypes"
+    elementTypeClass="dev.jstanger.language.psi.CornElementType"
+    tokenTypeClass="dev.jstanger.language.psi.CornTokenType"
+
+    psiImplUtilClass="dev.jstanger.language.psi.impl.CornPsiImplUtil"
+
+    tokens = [
+        space = "regexp:\s+"
+        comment = "regexp://.*"
+
+        LET="let"
+        IN="in"
+        TRUE="true"
+        FALSE="false"
+        NULL="null"
+
+        path_seg = "regexp:\p{Alpha}\w*"
+        string='regexp:"([^"\\]|\\.)*"'
+        input_token = "regexp:\$[A-z_][A-z0-9_]*"
+        float = "regexp:-?\d+(\.\d*)?"
+        integer = "regexp:-?\d+"
+
+        OP_EQ="="
+        LEFT_BRACE="{"
+        RIGHT_BRACE="}"
+        LEFT_BRACKET="["
+        RIGHT_BRACKET="]"
+        DOUBLE_QUOTE="\""
+        UNDERSCORE="_"
+        DOLLAR="$"
+        DOT="."
+    ]
+}
+
+config ::= assign_block? object
+
+assign_block ::= LET LEFT_BRACE { assignment } * RIGHT_BRACE IN {
+    methods=[getPresentation]
+}
+
+assignment ::= input OP_EQ value {methods=[getInputName]}
+
+object ::= LEFT_BRACE { pair }* RIGHT_BRACE
+
+pair ::= path OP_EQ value {
+    pin=1
+    recoverWhile=pair_recover
+    methods=[getName getPresentation]
+}
+private pair_recover ::= !(path | RIGHT_BRACE )
+
+path ::= path_seg + (DOT path_seg )* {
+    methods=[getName getPresentation]
+}
+
+value ::= object | array | input | string | float | integer | boolean | NULL {
+    methods=[getName getPresentation]
+}
+
+input ::= input_token {
+    mixin="dev.jstanger.language.psi.impl.CornNamedElementImpl"
+    implements="dev.jstanger.language.psi.CornNamedElement"
+    methods=[getName setName getNameIdentifier getPresentation]
+}
+
+array ::= LEFT_BRACKET value* RIGHT_BRACKET
+
+boolean ::= TRUE | FALSE

@@ -1,0 +1,42 @@
+<idea-plugin>
+    <id>dev.jstanger.corn-intellij</id>
+    <name>Corn</name>
+    <vendor email="mail@jstanger.dev" url="https://jstanger.dev">Jake Stanger</vendor>
+
+    <description><![CDATA[
+    Enter short description for your plugin here.<br>
+    <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="Corn config file" implementationClass="dev.jstanger.language.CornFileType"
+                  fieldName="INSTANCE" language="Corn" extensions="corn"/>
+        <lang.parserDefinition language="Corn" implementationClass="dev.jstanger.language.CornParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="Corn"
+                                       implementationClass="dev.jstanger.language.highlighting.CornSyntaxHighlighterFactory"/>
+        <colorSettingsPage implementation="dev.jstanger.language.highlighting.CornColorSettingsPage"/>
+        <annotator language="Corn" implementationClass="dev.jstanger.language.CornAnnotator"/>
+        <codeInsight.lineMarkerProvider language="Corn"
+                                        implementationClass="dev.jstanger.language.CornLineMarkerProvider"/>
+        <completion.contributor language="Corn" implementationClass="dev.jstanger.language.CornCompletionContributor"/>
+        <psi.referenceContributor implementation="dev.jstanger.language.CornReferenceContributor"/>
+        <lang.refactoringSupport language="Corn"
+                                 implementationClass="dev.jstanger.language.CornRefactoringSupportProvider"/>
+        <lang.foldingBuilder language="Corn" implementationClass="dev.jstanger.language.CornFoldingBuilder" />
+        <lang.braceMatcher language="Corn" implementationClass="dev.jstanger.language.CornBraceMatcher" />
+        <lang.commenter language="Corn" implementationClass="dev.jstanger.language.CornCommenter" />
+        <gotoSymbolContributor implementation="dev.jstanger.language.CornChooseByNameContributor" />
+        <lang.psiStructureViewFactory language="Corn" implementationClass="dev.jstanger.language.structure.CornStructureViewFactory" />
+        <lang.formatter language="Corn" implementationClass="dev.jstanger.language.formatting.CornFormattingModelBuilder" />
+        <codeStyleSettingsProvider implementation="dev.jstanger.language.codeStyle.CornCodeStyleSettingsProvider" />
+        <langCodeStyleSettingsProvider implementation="dev.jstanger.language.codeStyle.CornLanguageCodeStyleSettingsProvider" />
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
