@@ -4,8 +4,7 @@
     <vendor email="mail@jstanger.dev" url="https://jstanger.dev">Jake Stanger</vendor>
 
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    Language support for the <a href="https://github.com/JakeStanger/corn">Corn</a> configuration language.
     ]]></description>
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
