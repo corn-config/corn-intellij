@@ -1,6 +1,6 @@
 # Corn Intellij
 
-Language plugin for the [Corn]() configuration language for Intellij.
+Language plugin for the [Corn](https://github.com/JakeStanger/corn) configuration language for Intellij.
 
 ## Attributions
 
