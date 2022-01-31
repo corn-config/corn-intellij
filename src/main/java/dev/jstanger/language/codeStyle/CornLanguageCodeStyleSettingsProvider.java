@@ -2,10 +2,13 @@ package dev.jstanger.language.codeStyle;
 
 import com.intellij.lang.Language;
 import com.intellij.psi.codeStyle.CodeStyleSettingsCustomizable;
+import com.intellij.psi.codeStyle.CodeStyleSettingsCustomizableOptions;
 import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider;
 import dev.jstanger.language.CornLanguage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import static com.intellij.psi.codeStyle.CodeStyleSettingsCustomizable.WRAP_VALUES;
 
 public class CornLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettingsProvider {
     @Override
@@ -15,6 +18,8 @@ public class CornLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSett
 
     @Override
     public void customizeSettings(@NotNull CodeStyleSettingsCustomizable consumer, @NotNull SettingsType settingsType) {
+        CodeStyleSettingsCustomizableOptions customizableOptions = CodeStyleSettingsCustomizableOptions.getInstance();
+
         switch (settingsType) {
             case SPACING_SETTINGS: {
                 consumer.showStandardOptions("SPACE_AROUND_ASSIGNMENT_OPERATORS");
@@ -22,9 +27,16 @@ public class CornLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSett
 
                 break;
             }
-//            case BLANK_LINES_SETTINGS: {
-//                consumer.showStandardOptions("KEEP_BLANK_LINES_IN_CODE");
-//            }
+            case WRAPPING_AND_BRACES_SETTINGS:
+                consumer.showCustomOption(CornCodeStyleSettings.class, "OBJECTS_WRAP", "Objects", "Objects", customizableOptions.WRAP_OPTIONS, WRAP_VALUES);
+                consumer.showCustomOption(CornCodeStyleSettings.class, "OBJECTS_ALIGN_WHEN_MULTILINE", "Align when multiline", "Objects");
+                consumer.showCustomOption(CornCodeStyleSettings.class, "OBJECT_FIELDS_WRAP", "Fields", "Objects", customizableOptions.WRAP_OPTIONS, WRAP_VALUES);
+                consumer.showCustomOption(CornCodeStyleSettings.class, "OBJECT_FIELDS_ASSIGNMENT_ON_NEXT_LINE", "Align fields when multiline", "Objects");
+
+                consumer.showCustomOption(CornCodeStyleSettings.class, "ARRAYS_WRAP", "Arrays", "Arrays", customizableOptions.WRAP_OPTIONS, WRAP_VALUES);
+                consumer.showCustomOption(CornCodeStyleSettings.class, "ARRAYS_ALIGN_WHEN_MULTILINE", "Align when multiline", "Arrays");
+
+                break;
         }
     }
 
