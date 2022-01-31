@@ -2,11 +2,13 @@
     <id>dev.jstanger.corn-intellij</id>
     <name>Corn</name>
     <vendor email="mail@jstanger.dev" url="https://jstanger.dev">Jake Stanger</vendor>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 
     <description><![CDATA[
     Language support for the <a href="https://github.com/JakeStanger/corn">Corn</a> configuration language.
     ]]></description>
+
+    <change-notes>Re-write formatter to fix major issues, add new formatting issues.</change-notes>
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
