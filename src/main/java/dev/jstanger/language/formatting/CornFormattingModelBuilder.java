@@ -10,18 +10,22 @@ public class CornFormattingModelBuilder implements FormattingModelBuilder {
 
     private static SpacingBuilder createSpaceBuilder(CodeStyleSettings settings) {
         return new SpacingBuilder(settings, CornLanguage.INSTANCE)
-                 .around(CornTypes.OP_EQ).spaceIf(settings.getCommonSettings(CornLanguage.INSTANCE.getID()).SPACE_AROUND_ASSIGNMENT_OPERATORS);
+                .around(CornTypes.OP_EQ).spaceIf(settings.getCommonSettings(CornLanguage.INSTANCE.getID()).SPACE_AROUND_ASSIGNMENT_OPERATORS);
     }
 
     @Override
     public @NotNull FormattingModel createModel(@NotNull FormattingContext formattingContext) {
         final CodeStyleSettings codeStyleSettings = formattingContext.getCodeStyleSettings();
+        SpacingBuilder spacingBuilder = createSpaceBuilder(codeStyleSettings);
+        CornFormatter formatter = new CornFormatter(codeStyleSettings, spacingBuilder);
+
+        CornBlock rootBlock = new CornBlock(
+                formatter,
+                formattingContext.getNode(),
+                null, null, null
+        );
+
         return FormattingModelProvider
-                .createFormattingModelForPsiFile(formattingContext.getContainingFile(),
-                        new CornBlock(formattingContext.getNode(),
-                                Wrap.createWrap(WrapType.NONE, false),
-                                Alignment.createAlignment(),
-                                createSpaceBuilder(codeStyleSettings)),
-                        codeStyleSettings);
+                .createFormattingModelForPsiFile(formattingContext.getContainingFile(), rootBlock, codeStyleSettings);
     }
 }
