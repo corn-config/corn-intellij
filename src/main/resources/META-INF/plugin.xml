@@ -8,7 +8,9 @@
     Language support for the <a href="https://github.com/JakeStanger/corn">Corn</a> configuration language.
     ]]></description>
 
-    <change-notes>Re-write formatter to fix major issues, add new formatting issues.</change-notes>
+    <change-notes><![CDATA[
+        Re-write formatter to fix major issues, add new formatting issues.
+    ]]></change-notes>
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
@@ -25,17 +27,19 @@
         <codeInsight.lineMarkerProvider language="Corn"
                                         implementationClass="dev.jstanger.language.CornLineMarkerProvider"/>
         <completion.contributor language="Corn" implementationClass="dev.jstanger.language.CornCompletionContributor"/>
-        <psi.referenceContributor implementation="dev.jstanger.language.CornReferenceContributor"/>
-        <lang.refactoringSupport language="Corn"
-                                 implementationClass="dev.jstanger.language.CornRefactoringSupportProvider"/>
-        <lang.foldingBuilder language="Corn" implementationClass="dev.jstanger.language.CornFoldingBuilder" />
-        <lang.braceMatcher language="Corn" implementationClass="dev.jstanger.language.CornBraceMatcher" />
-        <lang.commenter language="Corn" implementationClass="dev.jstanger.language.CornCommenter" />
-        <gotoSymbolContributor implementation="dev.jstanger.language.CornChooseByNameContributor" />
-        <lang.psiStructureViewFactory language="Corn" implementationClass="dev.jstanger.language.structure.CornStructureViewFactory" />
-        <lang.formatter language="Corn" implementationClass="dev.jstanger.language.formatting.CornFormattingModelBuilder" />
-        <codeStyleSettingsProvider implementation="dev.jstanger.language.codeStyle.CornCodeStyleSettingsProvider" />
-        <langCodeStyleSettingsProvider implementation="dev.jstanger.language.codeStyle.CornLanguageCodeStyleSettingsProvider" />
+<!--        <psi.referenceContributor implementation="dev.jstanger.language.CornReferenceContributor"/>-->
+<!--        <lang.refactoringSupport language="Corn" implementationClass="dev.jstanger.language.CornRefactoringSupportProvider"/>-->
+        <lang.foldingBuilder language="Corn" implementationClass="dev.jstanger.language.CornFoldingBuilder"/>
+        <lang.braceMatcher language="Corn" implementationClass="dev.jstanger.language.CornBraceMatcher"/>
+        <lang.commenter language="Corn" implementationClass="dev.jstanger.language.CornCommenter"/>
+        <gotoSymbolContributor implementation="dev.jstanger.language.CornChooseByNameContributor"/>
+        <lang.psiStructureViewFactory language="Corn"
+                                      implementationClass="dev.jstanger.language.structure.CornStructureViewFactory"/>
+        <lang.formatter language="Corn"
+                        implementationClass="dev.jstanger.language.formatting.CornFormattingModelBuilder"/>
+        <codeStyleSettingsProvider implementation="dev.jstanger.language.codeStyle.CornCodeStyleSettingsProvider"/>
+        <langCodeStyleSettingsProvider
+                implementation="dev.jstanger.language.codeStyle.CornLanguageCodeStyleSettingsProvider"/>
     </extensions>
 
     <actions>
