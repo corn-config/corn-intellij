@@ -8,9 +8,7 @@
     Language support for the <a href="https://github.com/JakeStanger/corn">Corn</a> configuration language.
     ]]></description>
 
-    <change-notes><![CDATA[
-        Disable broken reference contributor and refactoring support.
-    ]]></change-notes>
+    <change-notes>PLACEHOLDER</change-notes>
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->

@@ -24,8 +24,7 @@ intellij {
 tasks {
     patchPluginXml {
         changeNotes.set("""
-            Add change notes here.<br>
-            <em>most HTML tags may be used</em>        """.trimIndent())
+            Disable broken refactoring and reference contributor extensions""".trimIndent())
     }
 }
 tasks.getByName<Test>("test") {
