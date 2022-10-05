@@ -12,6 +12,6 @@ public class CornTokenType extends IElementType {
 
     @Override
     public String toString() {
-        return "CornTokenType." + super.toString();
+        return super.toString();
     }
 }
