@@ -1,11 +1,11 @@
 plugins {
-    id("org.jetbrains.intellij") version "1.3.1"
-    kotlin("jvm") version "1.5.10"
+    id("org.jetbrains.intellij") version "1.9.0"
+    kotlin("jvm") version "1.7.20"
     java
 }
 
 group = "dev.jstanger"
-version = "0.3.0"
+version = "0.4.0"
 
 repositories {
     mavenCentral()
@@ -19,12 +19,12 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version.set("2021.3.2")
+    version.set("2022.2")
 }
 tasks {
     patchPluginXml {
-        changeNotes.set("""
-            Disable broken refactoring and reference contributor extensions""".trimIndent())
+        changeNotes.set("""`
+            Add full character support to keys""".trimIndent())
     }
 }
 tasks.getByName<Test>("test") {
