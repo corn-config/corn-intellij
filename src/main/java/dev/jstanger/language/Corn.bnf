@@ -24,7 +24,7 @@
         FALSE="false"
         NULL="null"
 
-        path_seg = "regexp:[^=\s.\-\"$0-9][^=\s.]*"
+        path_seg = "regexp:[^=\s.\-\"$0-9{\[][^=\s.]*"
         string='regexp:"([^"\\]|\\.)*"'
         input_token = "regexp:\$[A-z_][A-z0-9_]*"
         float = "regexp:-?\d+(\.\d*)?"
