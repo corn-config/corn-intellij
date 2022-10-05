@@ -27,7 +27,7 @@ WHITE_SPACE=\s+
 
 SPACE=[ \t\n\x0B\f\r]+
 COMMENT="//".*
-PATH_SEG=[:letter:][a-zA-Z_0-9]*
+PATH_SEG=[^=\s.\-\"$0-9][^=\s.]*
 STRING=\"([^\"\\]|\\.)*\"
 INPUT_TOKEN=\$[A-z_][A-z0-9_]*
 FLOAT=-?[0-9]+(\.[0-9]*)?
