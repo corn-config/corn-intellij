@@ -18,11 +18,10 @@ import java.util.List;
 public class CornLineMarkerProvider extends RelatedItemLineMarkerProvider {
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
-        if (!(element instanceof CornValue)) {
+        if (!(element instanceof CornValue literalValue)) {
             return;
         }
 
-        CornValue literalValue = (CornValue) element;
         CornInput input = literalValue.getInput();
 
         if (input == null) {

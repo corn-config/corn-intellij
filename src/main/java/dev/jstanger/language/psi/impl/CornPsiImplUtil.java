@@ -65,7 +65,7 @@ public class CornPsiImplUtil {
             }
 
             @Override
-            public @Nullable Icon getIcon(boolean unused) {
+            public Icon getIcon(boolean unused) {
                 return CornIcons.FILE;
             }
 
@@ -90,7 +90,7 @@ public class CornPsiImplUtil {
             }
 
             @Override
-            public @Nullable Icon getIcon(boolean unused) {
+            public Icon getIcon(boolean unused) {
                 return CornIcons.FILE;
             }
 
@@ -111,7 +111,7 @@ public class CornPsiImplUtil {
             }
 
             @Override
-            public @Nullable Icon getIcon(boolean unused) {
+            public Icon getIcon(boolean unused) {
                 return CornIcons.FILE;
             }
 
@@ -136,7 +136,7 @@ public class CornPsiImplUtil {
             }
 
             @Override
-            public @Nullable Icon getIcon(boolean unused) {
+            public Icon getIcon(boolean unused) {
                 return CornIcons.FILE;
             }
 
@@ -152,12 +152,12 @@ public class CornPsiImplUtil {
     public static ItemPresentation getPresentation(final CornAssignBlock element) {
         return new ItemPresentation() {
             @Override
-            public @NlsSafe @Nullable String getPresentableText() {
+            public @NlsSafe String getPresentableText() {
                 return "Input block";
             }
 
             @Override
-            public @Nullable Icon getIcon(boolean unused) {
+            public Icon getIcon(boolean unused) {
                 return AllIcons.Json.Object;
             }
 

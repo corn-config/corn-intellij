@@ -10,11 +10,11 @@ public class CornCodeStyleSettings extends CustomCodeStyleSettings {
     }
 
     // Wrapping and braces
-    public int OBJECTS_WRAP = CommonCodeStyleSettings.DO_NOT_WRAP;
-    public boolean OBJECTS_ALIGN_WHEN_MULTILINE = false;
-    public int OBJECT_FIELDS_WRAP = CommonCodeStyleSettings.DO_NOT_WRAP;
-    public boolean OBJECT_FIELDS_ASSIGNMENT_ON_NEXT_LINE = false;
+    public final int OBJECTS_WRAP = CommonCodeStyleSettings.DO_NOT_WRAP;
+    public final boolean OBJECTS_ALIGN_WHEN_MULTILINE = false;
+    public final int OBJECT_FIELDS_WRAP = CommonCodeStyleSettings.DO_NOT_WRAP;
+    public final boolean OBJECT_FIELDS_ASSIGNMENT_ON_NEXT_LINE = false;
 
-    public int ARRAYS_WRAP = CommonCodeStyleSettings.DO_NOT_WRAP;
-    public boolean ARRAYS_ALIGN_WHEN_MULTILINE = false;
+    public final int ARRAYS_WRAP = CommonCodeStyleSettings.DO_NOT_WRAP;
+    public final boolean ARRAYS_ALIGN_WHEN_MULTILINE = false;
 }

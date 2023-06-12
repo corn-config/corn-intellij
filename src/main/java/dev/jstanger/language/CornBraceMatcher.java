@@ -2,7 +2,6 @@ package dev.jstanger.language;
 
 import com.intellij.lang.BracePair;
 import com.intellij.lang.PairedBraceMatcher;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IElementType;
 import dev.jstanger.language.psi.CornTypes;

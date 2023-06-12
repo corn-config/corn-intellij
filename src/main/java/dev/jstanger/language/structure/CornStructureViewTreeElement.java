@@ -99,10 +99,6 @@ public class CornStructureViewTreeElement implements StructureViewTreeElement {
         if (element instanceof CornPath) {
             CornValue value = ((CornPair) element.getParent()).getValue();
 
-            if (value == null) {
-                return EMPTY_ARRAY;
-            }
-
             if (value.getArray() != null) {
                 element = (NavigatablePsiElement) value.getArray();
             } else if (value.getObject() != null) {

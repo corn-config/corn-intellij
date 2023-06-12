@@ -4,11 +4,9 @@ import com.intellij.lang.ASTNode;
 import com.intellij.lang.folding.FoldingBuilderEx;
 import com.intellij.lang.folding.FoldingDescriptor;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.FoldingGroup;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiLiteralValue;
 import com.intellij.psi.util.PsiTreeUtil;
 import dev.jstanger.language.psi.CornArray;
 import dev.jstanger.language.psi.CornAssignBlock;
@@ -40,7 +38,7 @@ public class CornFoldingBuilder extends FoldingBuilderEx implements DumbAware {
             descriptors.add(new FoldingDescriptor(assignBlock.getNode(), new TextRange(blockText.indexOf('{') + 1, blockText.lastIndexOf('}'))));
         }
 
-        return descriptors.toArray(new FoldingDescriptor[descriptors.size()]);
+        return descriptors.toArray(new FoldingDescriptor[0]);
     }
 
     @Override

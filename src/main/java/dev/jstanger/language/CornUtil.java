@@ -65,7 +65,7 @@ public class CornUtil {
         if (selectedFile != null && selectedFile.getFileType() == CornFileType.INSTANCE) {
             CornFile file = (CornFile) PsiManager.getInstance(project).findFile(selectedFile);
 
-            Collection<CornPath> paths =  PsiTreeUtil.findChildrenOfType(file, CornPath.class);
+            Collection<CornPath> paths = PsiTreeUtil.findChildrenOfType(file, CornPath.class);
             return new ArrayList<>(paths);
         }
 

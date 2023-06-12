@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class CornCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
     @Override
-    public CustomCodeStyleSettings createCustomSettings(CodeStyleSettings settings) {
+    public CustomCodeStyleSettings createCustomSettings(@NotNull CodeStyleSettings settings) {
         return new CornCodeStyleSettings(settings);
     }
 
@@ -27,7 +27,7 @@ public class CornCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
     public CodeStyleConfigurable createConfigurable(@NotNull CodeStyleSettings settings, @NotNull CodeStyleSettings modelSettings) {
         return new CodeStyleAbstractConfigurable(settings, modelSettings, this.getConfigurableDisplayName()) {
             @Override
-            protected CodeStyleAbstractPanel createPanel(CodeStyleSettings settings) {
+            protected @NotNull CodeStyleAbstractPanel createPanel(@NotNull CodeStyleSettings settings) {
                 return new SimpleCodeStyleMainPanel(getCurrentSettings(), settings);
             }
         };

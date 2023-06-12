@@ -9,9 +9,4 @@ public class CornTokenType extends IElementType {
     public CornTokenType(@NotNull @NonNls String debugName) {
         super(debugName, CornLanguage.INSTANCE);
     }
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }

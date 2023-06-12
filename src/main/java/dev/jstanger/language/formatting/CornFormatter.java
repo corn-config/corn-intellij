@@ -116,18 +116,18 @@ public class CornFormatter {
 
 
     class WrapCache {
-        Wrap objectEntryWrap = Wrap.createWrap(customSettings.OBJECTS_WRAP, false);
-        Wrap arrayEntryMap = Wrap.createWrap(customSettings.ARRAYS_WRAP, false);
+        final Wrap objectEntryWrap = Wrap.createWrap(customSettings.OBJECTS_WRAP, false);
+        final Wrap arrayEntryMap = Wrap.createWrap(customSettings.ARRAYS_WRAP, false);
 
-        Wrap fieldInnerWrap = Wrap.createWrap(customSettings.OBJECT_FIELDS_WRAP, true);
-        Wrap keyValueSeparatorWrap = customSettings.OBJECT_FIELDS_ASSIGNMENT_ON_NEXT_LINE ? fieldInnerWrap : null;
+        final Wrap fieldInnerWrap = Wrap.createWrap(customSettings.OBJECT_FIELDS_WRAP, true);
+        final Wrap keyValueSeparatorWrap = customSettings.OBJECT_FIELDS_ASSIGNMENT_ON_NEXT_LINE ? fieldInnerWrap : null;
 
-        Wrap fieldValueWrap = keyValueSeparatorWrap == null ? fieldInnerWrap : null;
+        final Wrap fieldValueWrap = keyValueSeparatorWrap == null ? fieldInnerWrap : null;
     }
 
     class AlignmentCache {
-        Alignment objectEntryAlignment = customSettings.OBJECTS_ALIGN_WHEN_MULTILINE ? Alignment.createAlignment() : null;
-        Alignment arrayEntryAlignment = customSettings.ARRAYS_ALIGN_WHEN_MULTILINE ? Alignment.createAlignment() : null;
+        final Alignment objectEntryAlignment = customSettings.OBJECTS_ALIGN_WHEN_MULTILINE ? Alignment.createAlignment() : null;
+        final Alignment arrayEntryAlignment = customSettings.ARRAYS_ALIGN_WHEN_MULTILINE ? Alignment.createAlignment() : null;
     }
 }
 

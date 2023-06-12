@@ -22,8 +22,6 @@ public class CornReference extends PsiReferenceBase<PsiElement> implements PsiPo
 
     @Override
     public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
-        System.out.println("Multi resolve??");
-
         Project project = myElement.getProject();
         final List<CornInput> inputs = CornUtil.findInputs(project, key, true);
 
@@ -32,22 +30,18 @@ public class CornReference extends PsiReferenceBase<PsiElement> implements PsiPo
             results.add(new PsiElementResolveResult(input));
         }
 
-        return results.toArray(new ResolveResult[results.size()]);
+        return results.toArray(new ResolveResult[0]);
     }
 
     @Nullable
     @Override
     public PsiElement resolve() {
-        System.out.println("Resolve??");
-
         ResolveResult[] resolveResults = multiResolve(false);
         return resolveResults.length == 1 ? resolveResults[0].getElement() : null;
     }
 
     @Override
     public Object @NotNull [] getVariants() {
-        System.out.println("Get variants??");
-
         Project project = myElement.getProject();
         final List<CornInput> inputs = CornUtil.findInputs(project, null, true);
         List<LookupElement> variants = new ArrayList<>();

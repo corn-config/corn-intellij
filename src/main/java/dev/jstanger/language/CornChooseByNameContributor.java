@@ -30,7 +30,7 @@ public class CornChooseByNameContributor implements ChooseByNameContributor {
             }
         }
 
-        return names.toArray(new String[names.size()]);
+        return names.toArray(new String[0]);
     }
 
     @Override
@@ -52,6 +52,6 @@ public class CornChooseByNameContributor implements ChooseByNameContributor {
             }
         }
 
-        return navigationItems.toArray(new NavigationItem[navigationItems.size()]);
+        return navigationItems.toArray(new NavigationItem[0]);
     }
 }

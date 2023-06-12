@@ -15,7 +15,6 @@ import dev.jstanger.language.parser.CornParser;
 import dev.jstanger.language.psi.CornFile;
 import dev.jstanger.language.psi.CornTypes;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class CornParserDefinition implements ParserDefinition {
     public static final TokenSet WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE);
