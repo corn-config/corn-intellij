@@ -15,7 +15,7 @@ import java.util.List;
 public class CornUtil {
     /**
      * Finds all assignments in the current file.
-     *
+     * <p>
      * FIXME: Should be able to get from whole project for symbol contributor
      *
      * @param project
@@ -32,7 +32,7 @@ public class CornUtil {
             CornAssignBlock assignBlock = PsiTreeUtil.getChildOfType(file, CornAssignBlock.class);
 
             if (assignBlock == null) {
-                return null;
+                return result;
             }
 
             CornAssignment[] values = PsiTreeUtil.getChildrenOfType(assignBlock, CornAssignment.class);

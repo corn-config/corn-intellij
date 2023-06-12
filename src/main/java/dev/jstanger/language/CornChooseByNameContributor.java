@@ -18,10 +18,8 @@ public class CornChooseByNameContributor implements ChooseByNameContributor {
 
         List<String> names = new ArrayList<>();
 
-        if(assignments != null) {
-            for (CornAssignment assignment : assignments) {
-                names.add(assignment.getInputName());
-            }
+        for (CornAssignment assignment : assignments) {
+            names.add(assignment.getInputName());
         }
 
         if(paths != null) {
@@ -40,10 +38,8 @@ public class CornChooseByNameContributor implements ChooseByNameContributor {
 
         List<NavigationItem> navigationItems = new ArrayList<>();
 
-        if(assignments != null) {
-            for(CornAssignment assignment : assignments) {
-                navigationItems.add((NavigationItem) assignment.getInput());
-            }
+        for (CornAssignment assignment : assignments) {
+            navigationItems.add((NavigationItem) assignment.getInput());
         }
 
         if(paths != null) {

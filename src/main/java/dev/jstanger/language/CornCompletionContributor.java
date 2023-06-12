@@ -10,7 +10,6 @@ import dev.jstanger.language.psi.CornAssignment;
 import dev.jstanger.language.psi.CornTypes;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 public class CornCompletionContributor extends CompletionContributor {
@@ -23,10 +22,8 @@ public class CornCompletionContributor extends CompletionContributor {
                         Project project = ProjectManager.getInstance().getOpenProjects()[0];
                         List<CornAssignment> assignments = CornUtil.findAssignments(project, null);
 
-                        if (assignments != null) {
-                            for (CornAssignment assignment : assignments) {
-                                result.addElement(LookupElementBuilder.create(assignment.getInputName()));
-                            }
+                        for (CornAssignment assignment : assignments) {
+                            result.addElement(LookupElementBuilder.create(assignment.getInputName()));
                         }
                     }
                 }

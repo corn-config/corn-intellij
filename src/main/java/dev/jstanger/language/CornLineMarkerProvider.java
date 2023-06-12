@@ -38,7 +38,7 @@ public class CornLineMarkerProvider extends RelatedItemLineMarkerProvider {
         Project project = ProjectManager.getInstance().getOpenProjects()[0];
         List<CornAssignment> assignments = CornUtil.findAssignments(project, inputName);
 
-        if (assignments != null && !assignments.isEmpty()) {
+        if (!assignments.isEmpty()) {
             NavigationGutterIconBuilder<PsiElement> builder = NavigationGutterIconBuilder
                     .create(AllIcons.Gutter.ImplementingMethod)
                     .setTargets(assignments.get(assignments.size() - 1))
