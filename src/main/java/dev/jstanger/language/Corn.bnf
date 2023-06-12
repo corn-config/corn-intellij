@@ -15,7 +15,7 @@
     psiImplUtilClass="dev.jstanger.language.psi.impl.CornPsiImplUtil"
 
     tokens = [
-        space = "regexp:\s+"
+        space = "regexp:\s*"
         comment = "regexp://.*"
 
         LET="let"
@@ -24,9 +24,9 @@
         FALSE="false"
         NULL="null"
 
-        path_seg = "regexp:[^=\s.\-\"$0-9{\[][^=\s.]*"
+        path_seg = "regexp:[^=.\s]+"
         string='regexp:"([^"\\]|\\.)*"'
-        input_token = "regexp:\$[A-z_][A-z0-9_]*"
+        input_token = "regexp:\$[a-zA-Z_][a-zA-Z0-9_]*"
         float = "regexp:-?\d+(\.\d*)?"
         integer = "regexp:-?\d+"
 
@@ -36,30 +36,31 @@
         LEFT_BRACKET="["
         RIGHT_BRACKET="]"
         DOUBLE_QUOTE="\""
-        UNDERSCORE="_"
-        DOLLAR="$"
         DOT="."
+        DOTDOT=".."
     ]
 }
 
 config ::= assign_block? object
 
-assign_block ::= LET LEFT_BRACE { assignment } * RIGHT_BRACE IN {
+assign_block ::= LET LEFT_BRACE { assignment }* RIGHT_BRACE IN {
     methods=[getPresentation]
 }
 
-assignment ::= input OP_EQ value {methods=[getInputName]}
+assignment ::= input OP_EQ value { methods=[getInputName] }
 
-object ::= LEFT_BRACE { pair }* RIGHT_BRACE
+object ::= LEFT_BRACE object_value* RIGHT_BRACE
+object_value ::= pair | spread {
+    pin=1
+    recoverWhile=object_value_recover
+}
+private object_value_recover ::= !(object_value | RIGHT_BRACE )
 
 pair ::= path OP_EQ value {
-    pin=1
-    recoverWhile=pair_recover
     methods=[getName getPresentation]
 }
-private pair_recover ::= !(path | RIGHT_BRACE )
 
-path ::= path_seg + (DOT path_seg )* {
+path ::= path_seg ( DOT path_seg )* {
     methods=[getName getPresentation]
 }
 
@@ -73,6 +74,9 @@ input ::= input_token {
     methods=[getName setName getNameIdentifier getPresentation]
 }
 
-array ::= LEFT_BRACKET value* RIGHT_BRACKET
+array ::= LEFT_BRACKET array_value* RIGHT_BRACKET
+array_value ::= value | spread
 
 boolean ::= TRUE | FALSE
+
+spread ::= DOTDOT input

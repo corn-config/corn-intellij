@@ -35,9 +35,9 @@ public class CornPairImpl extends ASTWrapperPsiElement implements CornPair {
   }
 
   @Override
-  @Nullable
+  @NotNull
   public CornValue getValue() {
-    return findChildByClass(CornValue.class);
+    return findNotNullChildByClass(CornValue.class);
   }
 
   @Override

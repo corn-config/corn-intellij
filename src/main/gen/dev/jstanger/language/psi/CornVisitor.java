@@ -11,6 +11,10 @@ public class CornVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitArrayValue(@NotNull CornArrayValue o) {
+    visitPsiElement(o);
+  }
+
   public void visitAssignBlock(@NotNull CornAssignBlock o) {
     visitPsiElement(o);
   }
@@ -31,11 +35,19 @@ public class CornVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitObjectValue(@NotNull CornObjectValue o) {
+    visitPsiElement(o);
+  }
+
   public void visitPair(@NotNull CornPair o) {
     visitPsiElement(o);
   }
 
   public void visitPath(@NotNull CornPath o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSpread(@NotNull CornSpread o) {
     visitPsiElement(o);
   }
 

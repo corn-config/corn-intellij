@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface CornArray extends PsiElement {
 
   @NotNull
-  List<CornValue> getValueList();
+  List<CornArrayValue> getArrayValueList();
 
 }

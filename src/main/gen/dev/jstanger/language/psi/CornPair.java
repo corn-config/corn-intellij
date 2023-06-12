@@ -11,7 +11,7 @@ public interface CornPair extends PsiElement {
   @NotNull
   CornPath getPath();
 
-  @Nullable
+  @NotNull
   CornValue getValue();
 
   String getName();

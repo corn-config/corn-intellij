@@ -19,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 public class CornParserDefinition implements ParserDefinition {
     public static final TokenSet WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE);
     public static final TokenSet COMMENTS = TokenSet.create(CornTypes.COMMENT);
+    public static final TokenSet STRINGS = TokenSet.create(CornTypes.STRING);
 
     public static final IFileElementType FILE = new IFileElementType(CornLanguage.INSTANCE);
 
@@ -49,7 +50,7 @@ public class CornParserDefinition implements ParserDefinition {
 
     @Override
     public @NotNull TokenSet getStringLiteralElements() {
-        return TokenSet.EMPTY;
+        return STRINGS;
     }
 
     @Override

@@ -36,7 +36,7 @@ public class CornParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LEFT_BRACKET value* RIGHT_BRACKET
+  // LEFT_BRACKET array_value* RIGHT_BRACKET
   public static boolean array(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "array")) return false;
     if (!nextTokenIs(b, LEFT_BRACKET)) return false;
@@ -49,19 +49,31 @@ public class CornParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // value*
+  // array_value*
   private static boolean array_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "array_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!value(b, l + 1)) break;
+      if (!array_value(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "array_1", c)) break;
     }
     return true;
   }
 
   /* ********************************************************** */
-  // LET LEFT_BRACE { assignment } * RIGHT_BRACE IN
+  // value | spread
+  public static boolean array_value(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "array_value")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, ARRAY_VALUE, "<array value>");
+    r = value(b, l + 1);
+    if (!r) r = spread(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // LET LEFT_BRACE { assignment }* RIGHT_BRACE IN
   public static boolean assign_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assign_block")) return false;
     if (!nextTokenIs(b, LET)) return false;
@@ -74,7 +86,7 @@ public class CornParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // { assignment } *
+  // { assignment }*
   private static boolean assign_block_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assign_block_2")) return false;
     while (true) {
@@ -155,7 +167,7 @@ public class CornParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LEFT_BRACE { pair }* RIGHT_BRACE
+  // LEFT_BRACE object_value* RIGHT_BRACE
   public static boolean object(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object")) return false;
     if (!nextTokenIs(b, LEFT_BRACE)) return false;
@@ -168,23 +180,47 @@ public class CornParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // { pair }*
+  // object_value*
   private static boolean object_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!object_1_0(b, l + 1)) break;
+      if (!object_value(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "object_1", c)) break;
     }
     return true;
   }
 
-  // { pair }
-  private static boolean object_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "object_1_0")) return false;
+  /* ********************************************************** */
+  // pair | spread
+  public static boolean object_value(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "object_value")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, OBJECT_VALUE, "<object value>");
+    r = pair(b, l + 1);
+    if (!r) r = spread(b, l + 1);
+    exit_section_(b, l, m, r, false, CornParser::object_value_recover);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // !(object_value | RIGHT_BRACE )
+  static boolean object_value_recover(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "object_value_recover")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !object_value_recover_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // object_value | RIGHT_BRACE
+  private static boolean object_value_recover_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "object_value_recover_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = pair(b, l + 1);
+    r = object_value(b, l + 1);
+    if (!r) r = consumeToken(b, RIGHT_BRACE);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -193,65 +229,30 @@ public class CornParser implements PsiParser, LightPsiParser {
   // path OP_EQ value
   public static boolean pair(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "pair")) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, PAIR, "<pair>");
-    r = path(b, l + 1);
-    p = r; // pin = 1
-    r = r && report_error_(b, consumeToken(b, OP_EQ));
-    r = p && value(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, CornParser::pair_recover);
-    return r || p;
-  }
-
-  /* ********************************************************** */
-  // !(path | RIGHT_BRACE )
-  static boolean pair_recover(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "pair_recover")) return false;
+    if (!nextTokenIs(b, PATH_SEG)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !pair_recover_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // path | RIGHT_BRACE
-  private static boolean pair_recover_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "pair_recover_0")) return false;
-    boolean r;
+    Marker m = enter_section_(b);
     r = path(b, l + 1);
-    if (!r) r = consumeToken(b, RIGHT_BRACE);
+    r = r && consumeToken(b, OP_EQ);
+    r = r && value(b, l + 1);
+    exit_section_(b, m, PAIR, r);
     return r;
   }
 
   /* ********************************************************** */
-  // path_seg + (DOT path_seg )*
+  // path_seg ( DOT path_seg )*
   public static boolean path(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "path")) return false;
     if (!nextTokenIs(b, PATH_SEG)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = path_0(b, l + 1);
+    r = consumeToken(b, PATH_SEG);
     r = r && path_1(b, l + 1);
     exit_section_(b, m, PATH, r);
     return r;
   }
 
-  // path_seg +
-  private static boolean path_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "path_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, PATH_SEG);
-    while (r) {
-      int c = current_position_(b);
-      if (!consumeToken(b, PATH_SEG)) break;
-      if (!empty_element_parsed_guard_(b, "path_0", c)) break;
-    }
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (DOT path_seg )*
+  // ( DOT path_seg )*
   private static boolean path_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "path_1")) return false;
     while (true) {
@@ -269,6 +270,19 @@ public class CornParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, DOT, PATH_SEG);
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // DOTDOT input
+  public static boolean spread(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "spread")) return false;
+    if (!nextTokenIs(b, DOTDOT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DOTDOT);
+    r = r && input(b, l + 1);
+    exit_section_(b, m, SPREAD, r);
     return r;
   }
 

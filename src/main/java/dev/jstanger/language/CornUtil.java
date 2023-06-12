@@ -6,6 +6,7 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.util.PsiTreeUtil;
 import dev.jstanger.language.psi.*;
 import com.intellij.openapi.vfs.VirtualFile;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class CornUtil {
 
     /**
      * Finds all paths in the current file.
-     *
+     * <p>
      * FIXME: Should be able to get from whole project for symbol contributor
      *
      * @param project
@@ -86,21 +87,8 @@ public class CornUtil {
         if (selectedFile != null && selectedFile.getFileType() == CornFileType.INSTANCE) {
             CornFile file = (CornFile) PsiManager.getInstance(project).findFile(selectedFile);
 
-            if (includeAssignments) {
-                CornAssignBlock assignBlock = PsiTreeUtil.getChildOfType(file, CornAssignBlock.class);
-
-                if (assignBlock != null) {
-                    CornAssignment[] values = PsiTreeUtil.getChildrenOfType(assignBlock, CornAssignment.class);
-
-                    if (values != null) {
-                        for (CornAssignment value : values) {
-                            String inputName = value.getInputName();
-                            if (name == null || (inputName != null && inputName.equals(name))) {
-                                result.add(value.getInput());
-                            }
-                        }
-                    }
-                }
+            if (file != null && includeAssignments) {
+                findAssignmentInputs(file, name, result);
             }
 
             CornObject topLevelObject = PsiTreeUtil.getChildOfType(file, CornObject.class);
@@ -114,28 +102,53 @@ public class CornUtil {
     }
 
     /**
+     * Recursively finds all input elements in an assignment block.
+     *
+     * @param file
+     * @param name
+     * @param inputs
+     */
+    private static void findAssignmentInputs(@NotNull CornFile file, @Nullable String name, @NotNull ArrayList<CornInput> inputs) {
+        CornAssignBlock assignBlock = PsiTreeUtil.getChildOfType(file, CornAssignBlock.class);
+
+        if (assignBlock != null) {
+            CornAssignment[] values = PsiTreeUtil.getChildrenOfType(assignBlock, CornAssignment.class);
+
+            if (values != null) {
+                for (CornAssignment assignment : values) {
+                    String inputName = assignment.getInputName();
+                    if (name == null || (inputName != null && inputName.equals(name))) {
+                        inputs.add(assignment.getInput());
+                    }
+
+                    CornValue value = assignment.getValue();
+                    findValueInputs(value, name, inputs);
+                }
+            }
+        }
+    }
+
+    /**
      * Recursively finds all input elements in an object.
      *
      * @param object
      * @param inputs
      */
     private static void findObjectInputs(CornObject object, @Nullable String name, ArrayList<CornInput> inputs) {
-        List<CornPair> pairs = object.getPairList();
+        List<CornObjectValue> objectValues = object.getObjectValueList();
 
-        for (CornPair pair : pairs) {
-            CornValue value = pair.getValue();
+        for (CornObjectValue objectValue : objectValues) {
+            CornPair pair = objectValue.getPair();
 
-            if (value == null) {
-                return;
-            }
+            if (pair != null) {
+                CornValue value = pair.getValue();
+                findValueInputs(value, name, inputs);
+            } else {
+                var spread = objectValue.getSpread();
+                if (spread == null) return;
+                var input = spread.getInput();
 
-            if (value.getInput() != null) {
-                if (name == null || name.equals(value.getInput().getName()))
-                    inputs.add(value.getInput());
-            } else if (value.getObject() != null) {
-                findObjectInputs(value.getObject(), name, inputs);
-            } else if (value.getArray() != null) {
-                findArrayInputs(value.getArray(), name, inputs);
+                if (name == null || name.equals(input.getName())) inputs.add(input);
             }
         }
     }
@@ -147,17 +160,39 @@ public class CornUtil {
      * @param inputs
      */
     private static void findArrayInputs(CornArray array, @Nullable String name, ArrayList<CornInput> inputs) {
-        List<CornValue> values = array.getValueList();
+        List<CornArrayValue> arrayValues = array.getArrayValueList();
 
-        for (CornValue value : values) {
-            if (value.getInput() != null) {
-                if (name == null || name.equals(value.getInput().getName()))
-                    inputs.add(value.getInput());
-            } else if (value.getObject() != null) {
-                findObjectInputs(value.getObject(), name, inputs);
-            } else if (value.getArray() != null) {
-                findArrayInputs(value.getArray(), name, inputs);
+        for (CornArrayValue arrayValue : arrayValues) {
+            CornValue value = arrayValue.getValue();
+
+            if (value != null) {
+                findValueInputs(value, name, inputs);
+            } else {
+                var spread = arrayValue.getSpread();
+                if (spread == null) return;
+                var input = spread.getInput();
+
+                if (name == null || name.equals(input.getName())) inputs.add(input);
             }
+
+        }
+    }
+
+    /**
+     * Recursively finds inputs inside in a value.
+     *
+     * @param value
+     * @param name
+     * @param inputs
+     */
+    private static void findValueInputs(CornValue value, @Nullable String name, ArrayList<CornInput> inputs) {
+        if (value.getInput() != null) {
+            var input = value.getInput();
+            if (name == null || name.equals(input.getName())) inputs.add(input);
+        } else if (value.getObject() != null) {
+            findObjectInputs(value.getObject(), name, inputs);
+        } else if (value.getArray() != null) {
+            findArrayInputs(value.getArray(), name, inputs);
         }
     }
 }

@@ -63,19 +63,19 @@ public class CornStructureViewTreeElement implements StructureViewTreeElement {
 
         if (myElement instanceof CornPath) {
             CornValue value = ((CornPair) myElement.getParent()).getValue();
-            String locationString = value != null && value.getObject() == null && value.getArray() == null ? value.getName() : "";
-            Icon icon = null;
-            if (value != null && value.getObject() != null) {
+            String locationString = value.getObject() == null && value.getArray() == null ? value.getName() : "";
+            Icon icon;
+            if (value.getObject() != null) {
                 icon = AllIcons.Json.Object;
-            } else if (value != null && value.getArray() != null) {
+            } else if (value.getArray() != null) {
                 icon = AllIcons.Json.Array;
-            } else if (value != null) {
+            } else {
                 icon = AllIcons.Nodes.Property;
             }
             return new PresentationData(presentation.getPresentableText(), locationString, icon, null);
         }
 
-        if(myElement instanceof CornValue) {
+        if (myElement instanceof CornValue) {
             CornValue value = (CornValue) myElement;
             String locationString = value.getObject() == null && value.getArray() == null ? value.getName() : "";
             Icon icon;
@@ -128,7 +128,7 @@ public class CornStructureViewTreeElement implements StructureViewTreeElement {
                 treeElements.add(createChild(topObject));
             }
 
-            return treeElements.toArray(new TreeElement[treeElements.size()]);
+            return treeElements.toArray(new TreeElement[0]);
         }
 
         if (element instanceof CornAssignBlock) {
@@ -143,22 +143,28 @@ public class CornStructureViewTreeElement implements StructureViewTreeElement {
         }
 
         if (element instanceof CornObject) {
-            List<CornPair> pairs = ((CornObject) element).getPairList();
-            List<TreeElement> treeElements = new ArrayList<>(pairs.size());
+            List<CornObjectValue> objectValues = ((CornObject) element).getObjectValueList();
+            List<TreeElement> treeElements = new ArrayList<>(objectValues.size());
 
-            for (CornPair pair : pairs) {
-                treeElements.add(createChild(pair.getPath()));
+            for (CornObjectValue objectValue : objectValues) {
+                CornPair pair = objectValue.getPair();
+                if (pair != null) {
+                    treeElements.add(createChild(pair.getPath()));
+                }
             }
 
             return treeElements.toArray(new TreeElement[0]);
         }
 
         if (element instanceof CornArray) {
-            List<CornValue> values = ((CornArray) element).getValueList();
-            List<TreeElement> treeElements = new ArrayList<>(values.size());
+            List<CornArrayValue> arrayValues = ((CornArray) element).getArrayValueList();
+            List<TreeElement> treeElements = new ArrayList<>(arrayValues.size());
 
-            for (CornValue value : values) {
-                treeElements.add(createChild(value));
+            for (CornArrayValue arrayValue : arrayValues) {
+                CornValue value = arrayValue.getValue();
+                if (value != null) {
+                    treeElements.add(createChild(value));
+                }
             }
 
             return treeElements.toArray(new TreeElement[0]);

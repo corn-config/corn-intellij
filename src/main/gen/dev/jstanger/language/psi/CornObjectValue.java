@@ -5,9 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface CornObject extends PsiElement {
+public interface CornObjectValue extends PsiElement {
 
-  @NotNull
-  List<CornObjectValue> getObjectValueList();
+  @Nullable
+  CornPair getPair();
+
+  @Nullable
+  CornSpread getSpread();
 
 }

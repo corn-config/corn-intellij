@@ -14,7 +14,9 @@ public class CornElementFactory {
         final CornFile dummyFile = createFile(project, text);
         CornObject object = PsiTreeUtil.getChildOfType(dummyFile, CornObject.class);
         assert object != null;
-        return Objects.requireNonNull(object.getPairList().get(0).getValue()).getInput();
+
+        final CornPair pair = Objects.requireNonNull(object.getObjectValueList().get(0).getPair());
+        return Objects.requireNonNull(pair.getValue()).getInput();
     }
 
     private static String getCreateInputText(String name) {

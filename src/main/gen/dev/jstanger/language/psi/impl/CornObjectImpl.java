@@ -29,8 +29,8 @@ public class CornObjectImpl extends ASTWrapperPsiElement implements CornObject {
 
   @Override
   @NotNull
-  public List<CornPair> getPairList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CornPair.class);
+  public List<CornObjectValue> getObjectValueList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CornObjectValue.class);
   }
 
 }
