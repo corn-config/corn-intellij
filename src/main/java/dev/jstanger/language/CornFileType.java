@@ -18,7 +18,7 @@ public class CornFileType extends LanguageFileType {
 
     @Override
     public @NonNls @NotNull String getName() {
-        return "Corn config file";
+        return "Corn config";
     }
 
     @Override

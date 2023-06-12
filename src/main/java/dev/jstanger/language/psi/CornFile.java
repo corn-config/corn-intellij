@@ -19,6 +19,6 @@ public class CornFile extends PsiFileBase {
 
     @Override
     public String toString() {
-        return "Corn config file";
+        return "Corn config";
     }
 }

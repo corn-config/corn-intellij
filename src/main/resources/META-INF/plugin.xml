@@ -16,7 +16,7 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="Corn config file" implementationClass="dev.jstanger.language.CornFileType"
+        <fileType name="Corn config" implementationClass="dev.jstanger.language.CornFileType"
                   fieldName="INSTANCE" language="Corn" extensions="corn"/>
         <lang.parserDefinition language="Corn" implementationClass="dev.jstanger.language.CornParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Corn"
