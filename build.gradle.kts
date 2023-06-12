@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "dev.jstanger"
-version = "0.4.0"
+version = "0.5.0"
 
 repositories {
     mavenCentral()
@@ -23,8 +23,13 @@ intellij {
 }
 tasks {
     patchPluginXml {
-        changeNotes.set("""`
-            Add full character support to keys""".trimIndent())
+        changeNotes.set(
+            """
+            - Add support for Corn v0.7 (spread operator)
+            - Add validation around inputs, key-chaining, and spreading
+            - Fix several parser-related bugs
+            """.trimIndent()
+        )
     }
 }
 tasks.getByName<Test>("test") {
