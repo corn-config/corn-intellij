@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "dev.jstanger"
-version = "0.5.0"
+version = "0.6.0"
 
 repositories {
     mavenCentral()
@@ -25,9 +25,7 @@ tasks {
     patchPluginXml {
         changeNotes.set(
             """
-            - Add support for Corn v0.7 (spread operator)
-            - Add validation around inputs, key-chaining, and spreading
-            - Fix several parser-related bugs
+            - Add support for Corn v0.8 (new primitives features)
             """.trimIndent()
         )
     }
