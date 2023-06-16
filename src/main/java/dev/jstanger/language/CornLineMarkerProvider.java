@@ -9,7 +9,6 @@ import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.PsiElement;
 import dev.jstanger.language.psi.CornAssignment;
 import dev.jstanger.language.psi.CornInput;
-import dev.jstanger.language.psi.CornValue;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -18,13 +17,11 @@ import java.util.List;
 public class CornLineMarkerProvider extends RelatedItemLineMarkerProvider {
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
-        if (!(element instanceof CornValue literalValue)) {
+        if (!(element instanceof CornInput input)) {
             return;
         }
 
-        CornInput input = literalValue.getInput();
-
-        if (input == null) {
+        if(element.getParent() instanceof CornAssignment) {
             return;
         }
 

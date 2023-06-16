@@ -19,14 +19,17 @@ public interface CornTypes {
   IElementType PAIR = new CornElementType("PAIR");
   IElementType PATH = new CornElementType("PATH");
   IElementType SPREAD = new CornElementType("SPREAD");
+  IElementType STRING = new CornElementType("STRING");
   IElementType VALUE = new CornElementType("VALUE");
 
+  IElementType CHAR = new CornTokenType("char");
   IElementType COMMENT = new CornTokenType("comment");
   IElementType DOT = new CornTokenType(".");
   IElementType DOTDOT = new CornTokenType("..");
   IElementType DOUBLE_QUOTE = new CornTokenType("\"");
   IElementType FALSE = new CornTokenType("false");
   IElementType FLOAT = new CornTokenType("float");
+  IElementType HEX_INTEGER = new CornTokenType("hex_integer");
   IElementType IN = new CornTokenType("in");
   IElementType INPUT_TOKEN = new CornTokenType("input_token");
   IElementType INTEGER = new CornTokenType("integer");
@@ -38,7 +41,6 @@ public interface CornTypes {
   IElementType PATH_SEG = new CornTokenType("path_seg");
   IElementType RIGHT_BRACE = new CornTokenType("}");
   IElementType RIGHT_BRACKET = new CornTokenType("]");
-  IElementType STRING = new CornTokenType("string");
   IElementType TRUE = new CornTokenType("true");
 
   class Factory {
@@ -76,6 +78,9 @@ public interface CornTypes {
       }
       else if (type == SPREAD) {
         return new CornSpreadImpl(node);
+      }
+      else if (type == STRING) {
+        return new CornStringImpl(node);
       }
       else if (type == VALUE) {
         return new CornValueImpl(node);

@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 public class CornUtil {
     /**
@@ -179,6 +180,23 @@ public class CornUtil {
     }
 
     /**
+     * Finds all inputs inside a string.
+     *
+     * @param string
+     * @param name
+     * @param inputs
+     */
+    private static void findStringInputs(CornString string, @Nullable String name, ArrayList<CornInput> inputs) {
+        var stringInputs = string
+                .getInputList()
+                .stream()
+                .filter(input -> name == null || Objects.equals(input.getName(), name))
+                .toList();
+
+        inputs.addAll(stringInputs);
+    }
+
+    /**
      * Recursively finds inputs inside in a value.
      *
      * @param value
@@ -193,6 +211,8 @@ public class CornUtil {
             findObjectInputs(value.getObject(), name, inputs);
         } else if (value.getArray() != null) {
             findArrayInputs(value.getArray(), name, inputs);
+        } else if (value.getString() != null) {
+            findStringInputs(value.getString(), name, inputs);
         }
     }
 }

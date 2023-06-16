@@ -21,13 +21,13 @@ public interface CornValue extends PsiElement {
   CornObject getObject();
 
   @Nullable
+  CornString getString();
+
+  @Nullable
   PsiElement getFloat();
 
   @Nullable
   PsiElement getInteger();
-
-  @Nullable
-  PsiElement getString();
 
   String getName();
 

@@ -287,6 +287,42 @@ public class CornParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // DOUBLE_QUOTE string_val* DOUBLE_QUOTE
+  public static boolean string(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "string")) return false;
+    if (!nextTokenIs(b, DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DOUBLE_QUOTE);
+    r = r && string_1(b, l + 1);
+    r = r && consumeToken(b, DOUBLE_QUOTE);
+    exit_section_(b, m, STRING, r);
+    return r;
+  }
+
+  // string_val*
+  private static boolean string_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "string_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!string_val(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "string_1", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // char | input
+  static boolean string_val(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "string_val")) return false;
+    if (!nextTokenIs(b, "", CHAR, INPUT_TOKEN)) return false;
+    boolean r;
+    r = consumeToken(b, CHAR);
+    if (!r) r = input(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
   // object | array | input | string | float | integer | boolean | NULL
   public static boolean value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "value")) return false;
@@ -295,7 +331,7 @@ public class CornParser implements PsiParser, LightPsiParser {
     r = object(b, l + 1);
     if (!r) r = array(b, l + 1);
     if (!r) r = input(b, l + 1);
-    if (!r) r = consumeToken(b, STRING);
+    if (!r) r = string(b, l + 1);
     if (!r) r = consumeToken(b, FLOAT);
     if (!r) r = consumeToken(b, INTEGER);
     if (!r) r = boolean_$(b, l + 1);

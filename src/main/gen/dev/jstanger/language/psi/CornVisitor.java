@@ -51,6 +51,10 @@ public class CornVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitString(@NotNull CornString o) {
+    visitPsiElement(o);
+  }
+
   public void visitValue(@NotNull CornValue o) {
     visitPsiElement(o);
   }

@@ -54,6 +54,12 @@ public class CornValueImpl extends ASTWrapperPsiElement implements CornValue {
 
   @Override
   @Nullable
+  public CornString getString() {
+    return findChildByClass(CornString.class);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getFloat() {
     return findChildByType(FLOAT);
   }
@@ -62,12 +68,6 @@ public class CornValueImpl extends ASTWrapperPsiElement implements CornValue {
   @Nullable
   public PsiElement getInteger() {
     return findChildByType(INTEGER);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
   }
 
   @Override

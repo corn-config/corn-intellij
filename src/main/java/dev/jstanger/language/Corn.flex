@@ -28,8 +28,10 @@ SPACE=[ \t\n\x0B\f\r]+
 COMMENT="//".*
 PATH_SEG=[^.\-\"${}\[\]=\s][^.=\s]*
 INPUT_TOKEN=\$[a-zA-Z_][a-zA-Z0-9_]*
-FLOAT=-?[0-9]+\.[0-9]+
-INTEGER=-?[0-9]+
+FLOAT=-?[0-9]+\.[0-9]+(e[+\-][0-9]+)?
+HEX_INTEGER=0x[0-9a-fA-F]+
+INTEGER=-?[0-9]+(_?[0-9]+)*
+CHAR=[^\"\\]|\\.
 
 %{
     Deque<Integer> stateStack = new ArrayDeque<>();
@@ -106,11 +108,13 @@ INTEGER=-?[0-9]+
     "false"            { popState(); return FALSE; }
     "null"             { popState(); return NULL; }
 
-    "\""               { replaceState(STRING_STATE); }
+    "\""               { replaceState(STRING_STATE); return DOUBLE_QUOTE; }
 
     {INPUT_TOKEN}      { popState(); return INPUT_TOKEN; }
     {FLOAT}            { popState(); return FLOAT; }
+    {HEX_INTEGER}      { popState(); return INTEGER; }
     {INTEGER}          { popState(); return INTEGER; }
+
 
     {COMMENT}          { return COMMENT; }
     {SPACE}            { return WHITE_SPACE; }
@@ -132,22 +136,25 @@ INTEGER=-?[0-9]+
     "false"            { return FALSE; }
     "null"             { return NULL; }
 
-    "\""               { pushState(STRING_STATE); }
+    "\""               { pushState(STRING_STATE); return DOUBLE_QUOTE; }
 
     {INPUT_TOKEN}      { return INPUT_TOKEN; }
     {FLOAT}            { return FLOAT; }
+    {HEX_INTEGER}      { return INTEGER; }
     {INTEGER}          { return INTEGER; }
+
 
     {COMMENT}          { return COMMENT; }
     {SPACE}            { return WHITE_SPACE; }
 }
 
 <STRING_STATE> {
-    "\""               { popState(); return STRING; }
+    "\""               { popState(); return DOUBLE_QUOTE; }
 
-    "\r"               { popState(); return BAD_CHARACTER; }
-    "\n"               { popState(); return BAD_CHARACTER; }
-    [^] {}
+    {INPUT_TOKEN}      { return INPUT_TOKEN; }
+    {CHAR}             { return CHAR; }
+
+    [^]                { popState(); return BAD_CHARACTER; }
 }
 
 [^] { return BAD_CHARACTER; }
