@@ -15,19 +15,17 @@ import java.util.List;
 public class CornCompletionContributor extends CompletionContributor {
 
     public CornCompletionContributor() {
-        extend(CompletionType.BASIC, PlatformPatterns.psiElement(CornTypes.INPUT_TOKEN),
-                new CompletionProvider<>() {
-                    @Override
-                    protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
-                        Project project = ProjectManager.getInstance().getOpenProjects()[0];
-                        List<CornAssignment> assignments = CornUtil.findAssignments(project, null);
+        extend(CompletionType.BASIC, PlatformPatterns.psiElement(CornTypes.INPUT_TOKEN), new CompletionProvider<>() {
+            @Override
+            protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
+                Project project = ProjectManager.getInstance().getOpenProjects()[0];
+                List<CornAssignment> assignments = CornUtil.findAssignments(project, null);
 
-                        for (CornAssignment assignment : assignments) {
-                            result.addElement(LookupElementBuilder.create(assignment.getInputName()));
-                        }
-                    }
+                for (CornAssignment assignment : assignments) {
+                    result.addElement(LookupElementBuilder.create(assignment.getInputName()));
                 }
-        );
+            }
+        });
     }
 
     @Override
