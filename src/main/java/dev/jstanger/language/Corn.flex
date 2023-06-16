@@ -37,7 +37,6 @@ CHAR=[^\"\\]|\\.
     Deque<Integer> stateStack = new ArrayDeque<>();
 
     private void pushState(int state) {
-        System.out.println("push state " + state);
         stateStack.push(state);
         yybegin(state);
     }
@@ -47,8 +46,6 @@ CHAR=[^\"\\]|\\.
 
         var newState = stateStack.peekFirst();
         if(newState == null) newState = YYINITIAL;
-
-        System.out.println("pop state (now " + newState + ")");
 
         yybegin(newState);
     }

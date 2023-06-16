@@ -301,7 +301,6 @@ public class CornLexer implements FlexLexer {
     Deque<Integer> stateStack = new ArrayDeque<>();
 
     private void pushState(int state) {
-        System.out.println("push state " + state);
         stateStack.push(state);
         yybegin(state);
     }
@@ -311,8 +310,6 @@ public class CornLexer implements FlexLexer {
 
         var newState = stateStack.peekFirst();
         if(newState == null) newState = YYINITIAL;
-
-        System.out.println("pop state (now " + newState + ")");
 
         yybegin(newState);
     }
