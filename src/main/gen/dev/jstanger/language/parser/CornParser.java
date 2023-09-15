@@ -135,6 +135,18 @@ public class CornParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // char_seq
+  public static boolean char_sequence(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "char_sequence")) return false;
+    if (!nextTokenIs(b, CHAR_SEQ)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, CHAR_SEQ);
+    exit_section_(b, m, CHAR_SEQUENCE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // assign_block? object
   static boolean config(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "config")) return false;
@@ -312,13 +324,13 @@ public class CornParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // char | input
+  // input | char_sequence
   static boolean string_val(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "string_val")) return false;
-    if (!nextTokenIs(b, "", CHAR, INPUT_TOKEN)) return false;
+    if (!nextTokenIs(b, "", CHAR_SEQ, INPUT_TOKEN)) return false;
     boolean r;
-    r = consumeToken(b, CHAR);
-    if (!r) r = input(b, l + 1);
+    r = input(b, l + 1);
+    if (!r) r = char_sequence(b, l + 1);
     return r;
   }
 

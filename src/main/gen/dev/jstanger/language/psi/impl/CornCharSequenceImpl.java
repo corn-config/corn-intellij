@@ -11,14 +11,14 @@ import static dev.jstanger.language.psi.CornTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.jstanger.language.psi.*;
 
-public class CornStringImpl extends ASTWrapperPsiElement implements CornString {
+public class CornCharSequenceImpl extends ASTWrapperPsiElement implements CornCharSequence {
 
-  public CornStringImpl(@NotNull ASTNode node) {
+  public CornCharSequenceImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull CornVisitor visitor) {
-    visitor.visitString(this);
+    visitor.visitCharSequence(this);
   }
 
   @Override
@@ -29,14 +29,8 @@ public class CornStringImpl extends ASTWrapperPsiElement implements CornString {
 
   @Override
   @NotNull
-  public List<CornCharSequence> getCharSequenceList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CornCharSequence.class);
-  }
-
-  @Override
-  @NotNull
-  public List<CornInput> getInputList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CornInput.class);
+  public PsiElement getCharSeq() {
+    return findNotNullChildByType(CHAR_SEQ);
   }
 
 }

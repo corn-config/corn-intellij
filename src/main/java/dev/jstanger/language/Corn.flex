@@ -31,7 +31,7 @@ INPUT_TOKEN=\$[a-zA-Z_][a-zA-Z0-9_]*
 FLOAT=-?[0-9]+\.[0-9]+(e[+\-][0-9]+)?
 HEX_INTEGER=0x[0-9a-fA-F]+
 INTEGER=-?[0-9]+(_?[0-9]+)*
-CHAR=[^\"\\]|\\.
+CHAR_SEQ=([^\"\\$]|\\.)+
 
 %{
     Deque<Integer> stateStack = new ArrayDeque<>();
@@ -149,7 +149,7 @@ CHAR=[^\"\\]|\\.
     "\""               { popState(); return DOUBLE_QUOTE; }
 
     {INPUT_TOKEN}      { return INPUT_TOKEN; }
-    {CHAR}             { return CHAR; }
+    {CHAR_SEQ}             { return CHAR_SEQ; }
 
     [^]                { popState(); return BAD_CHARACTER; }
 }

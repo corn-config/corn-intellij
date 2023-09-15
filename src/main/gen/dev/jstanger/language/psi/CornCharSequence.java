@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface CornString extends PsiElement {
+public interface CornCharSequence extends PsiElement {
 
   @NotNull
-  List<CornCharSequence> getCharSequenceList();
-
-  @NotNull
-  List<CornInput> getInputList();
+  PsiElement getCharSeq();
 
 }

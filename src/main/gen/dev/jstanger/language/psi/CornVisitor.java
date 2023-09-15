@@ -27,6 +27,10 @@ public class CornVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCharSequence(@NotNull CornCharSequence o) {
+    visitPsiElement(o);
+  }
+
   public void visitInput(@NotNull CornInput o) {
     visitNamedElement(o);
   }

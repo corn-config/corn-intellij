@@ -51,7 +51,7 @@ public class CornSyntaxHighlighter extends SyntaxHighlighterBase {
         if (tokenType.equals(CornTypes.INTEGER) || tokenType.equals(CornTypes.FLOAT)) {
             return NUMBER_KEYS;
         }
-        if (tokenType.equals(CornTypes.STRING) || tokenType.equals(CornTypes.CHAR) || tokenType.equals(CornTypes.DOUBLE_QUOTE)) {
+        if (tokenType.equals(CornTypes.STRING) || tokenType.equals(CornTypes.CHAR_SEQ) || tokenType.equals(CornTypes.DOUBLE_QUOTE)) {
             return STRING_KEYS;
         }
         if (tokenType.equals(CornTypes.PATH_SEG)) {

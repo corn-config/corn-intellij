@@ -13,6 +13,7 @@ public interface CornTypes {
   IElementType ASSIGNMENT = new CornElementType("ASSIGNMENT");
   IElementType ASSIGN_BLOCK = new CornElementType("ASSIGN_BLOCK");
   IElementType BOOLEAN = new CornElementType("BOOLEAN");
+  IElementType CHAR_SEQUENCE = new CornElementType("CHAR_SEQUENCE");
   IElementType INPUT = new CornElementType("INPUT");
   IElementType OBJECT = new CornElementType("OBJECT");
   IElementType OBJECT_VALUE = new CornElementType("OBJECT_VALUE");
@@ -22,7 +23,7 @@ public interface CornTypes {
   IElementType STRING = new CornElementType("STRING");
   IElementType VALUE = new CornElementType("VALUE");
 
-  IElementType CHAR = new CornTokenType("char");
+  IElementType CHAR_SEQ = new CornTokenType("char_seq");
   IElementType COMMENT = new CornTokenType("comment");
   IElementType DOT = new CornTokenType(".");
   IElementType DOTDOT = new CornTokenType("..");
@@ -60,6 +61,9 @@ public interface CornTypes {
       }
       else if (type == BOOLEAN) {
         return new CornBooleanImpl(node);
+      }
+      else if (type == CHAR_SEQUENCE) {
+        return new CornCharSequenceImpl(node);
       }
       else if (type == INPUT) {
         return new CornInputImpl(node);
