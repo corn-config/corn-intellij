@@ -2,7 +2,7 @@
     <id>dev.jstanger.corn-intellij</id>
     <name>Corn</name>
     <vendor email="mail@jstanger.dev" url="https://jstanger.dev">Jake Stanger</vendor>
-    <version>0.6.0</version>
+    <version>0.6.2</version>
     <idea-version since-build="213" until-build="*.*" />
 
     <description><![CDATA[

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "dev.jstanger"
-version = "0.6.0"
+version = "0.6.2"
 
 repositories {
     mavenCentral()
@@ -19,13 +19,13 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version.set("2023.1")
+    version.set("2023.2")
 }
 tasks {
     patchPluginXml {
         changeNotes.set(
             """
-            - Add support for Corn v0.8 (new primitives features)
+            Fix double-click in strings only highlighting a single character.
             """.trimIndent()
         )
     }
