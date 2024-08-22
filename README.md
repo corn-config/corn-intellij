@@ -13,4 +13,4 @@ Language plugin for the [Corn](https://github.com/JakeStanger/corn) configuratio
 
 ## Attributions
 
-- Corn image taken from [Twemoji](https://twemoji.twitter.com/).
+- Corn image taken from [Twemoji](https://twemoji.x.com/).
