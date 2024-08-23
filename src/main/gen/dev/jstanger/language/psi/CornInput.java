@@ -5,8 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.intellij.navigation.ItemPresentation;
-import com.intellij.openapi.util.NlsSafe;
-import com.intellij.util.IncorrectOperationException;
 
 public interface CornInput extends CornNamedElement {
 
@@ -14,8 +12,6 @@ public interface CornInput extends CornNamedElement {
   PsiElement getInputToken();
 
   String getName();
-
-  PsiElement setName(@NlsSafe @NotNull String name) throws IncorrectOperationException;
 
   @Nullable PsiElement getNameIdentifier();
 

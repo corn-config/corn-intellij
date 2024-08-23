@@ -10,16 +10,15 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static dev.jstanger.language.psi.CornTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.jstanger.language.psi.*;
-import com.intellij.navigation.ItemPresentation;
 
-public class CornPathImpl extends ASTWrapperPsiElement implements CornPath {
+public class CornPathPartImpl extends ASTWrapperPsiElement implements CornPathPart {
 
-  public CornPathImpl(@NotNull ASTNode node) {
+  public CornPathPartImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull CornVisitor visitor) {
-    visitor.visitPath(this);
+    visitor.visitPathPart(this);
   }
 
   @Override
@@ -29,19 +28,15 @@ public class CornPathImpl extends ASTWrapperPsiElement implements CornPath {
   }
 
   @Override
-  @NotNull
-  public List<CornPathPart> getPathPartList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CornPathPart.class);
+  @Nullable
+  public CornQuotedPathSeg getQuotedPathSeg() {
+    return findChildByClass(CornQuotedPathSeg.class);
   }
 
   @Override
-  public String getName() {
-    return CornPsiImplUtil.getName(this);
-  }
-
-  @Override
-  public ItemPresentation getPresentation() {
-    return CornPsiImplUtil.getPresentation(this);
+  @Nullable
+  public PsiElement getPathSeg() {
+    return findChildByType(PATH_SEG);
   }
 
 }

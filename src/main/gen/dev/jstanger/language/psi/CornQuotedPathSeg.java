@@ -4,15 +4,10 @@ package dev.jstanger.language.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import com.intellij.navigation.ItemPresentation;
 
-public interface CornPath extends PsiElement {
+public interface CornQuotedPathSeg extends PsiElement {
 
   @NotNull
-  List<CornPathPart> getPathPartList();
-
-  String getName();
-
-  ItemPresentation getPresentation();
+  PsiElement getQuotedPathSeq();
 
 }

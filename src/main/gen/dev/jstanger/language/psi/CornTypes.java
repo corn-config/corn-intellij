@@ -19,6 +19,8 @@ public interface CornTypes {
   IElementType OBJECT_VALUE = new CornElementType("OBJECT_VALUE");
   IElementType PAIR = new CornElementType("PAIR");
   IElementType PATH = new CornElementType("PATH");
+  IElementType PATH_PART = new CornElementType("PATH_PART");
+  IElementType QUOTED_PATH_SEG = new CornElementType("QUOTED_PATH_SEG");
   IElementType SPREAD = new CornElementType("SPREAD");
   IElementType STRING = new CornElementType("STRING");
   IElementType VALUE = new CornElementType("VALUE");
@@ -40,8 +42,10 @@ public interface CornTypes {
   IElementType NULL = new CornTokenType("null");
   IElementType OP_EQ = new CornTokenType("=");
   IElementType PATH_SEG = new CornTokenType("path_seg");
+  IElementType QUOTED_PATH_SEQ = new CornTokenType("quoted_path_seq");
   IElementType RIGHT_BRACE = new CornTokenType("}");
   IElementType RIGHT_BRACKET = new CornTokenType("]");
+  IElementType SINGLE_QUOTE = new CornTokenType("'");
   IElementType TRUE = new CornTokenType("true");
 
   class Factory {
@@ -79,6 +83,12 @@ public interface CornTypes {
       }
       else if (type == PATH) {
         return new CornPathImpl(node);
+      }
+      else if (type == PATH_PART) {
+        return new CornPathPartImpl(node);
+      }
+      else if (type == QUOTED_PATH_SEG) {
+        return new CornQuotedPathSegImpl(node);
       }
       else if (type == SPREAD) {
         return new CornSpreadImpl(node);

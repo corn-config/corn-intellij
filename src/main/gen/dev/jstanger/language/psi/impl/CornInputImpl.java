@@ -10,8 +10,6 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static dev.jstanger.language.psi.CornTypes.*;
 import dev.jstanger.language.psi.*;
 import com.intellij.navigation.ItemPresentation;
-import com.intellij.openapi.util.NlsSafe;
-import com.intellij.util.IncorrectOperationException;
 
 public class CornInputImpl extends CornNamedElementImpl implements CornInput {
 
@@ -38,11 +36,6 @@ public class CornInputImpl extends CornNamedElementImpl implements CornInput {
   @Override
   public String getName() {
     return CornPsiImplUtil.getName(this);
-  }
-
-  @Override
-  public PsiElement setName(String newName) {
-    return CornPsiImplUtil.setName(this, newName);
   }
 
   @Override

@@ -51,6 +51,14 @@ public class CornVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitPathPart(@NotNull CornPathPart o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQuotedPathSeg(@NotNull CornQuotedPathSeg o) {
+    visitPsiElement(o);
+  }
+
   public void visitSpread(@NotNull CornSpread o) {
     visitPsiElement(o);
   }

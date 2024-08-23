@@ -26,7 +26,8 @@ import static dev.jstanger.language.psi.CornTypes.*;
 
 SPACE=[ \t\n\x0B\f\r]+
 COMMENT="//".*
-PATH_SEG=[^.\-\"${}\[\]=\s][^.=\s]*
+PATH_SEG=[^.\-\"${}\[\]=\s'][^.=\s]*
+QUOTED_PATH_SEQ=([^']|\\')+
 INPUT_TOKEN=\$[a-zA-Z_][a-zA-Z0-9_]*
 FLOAT=-?[0-9]+\.[0-9]+(e[+\-][0-9]+)?
 HEX_INTEGER=0x[0-9a-fA-F]+
@@ -61,6 +62,7 @@ CHAR_SEQ=([^\"\\$]|\\.)+
 %state VALUE_STATE
 %state ARRAY_STATE
 %state STRING_STATE
+%state QUOTED_PATH_STATE
 
 %%
 
@@ -87,6 +89,7 @@ CHAR_SEQ=([^\"\\$]|\\.)+
 <OBJECT_STATE> {
     "}"                { popState(); return RIGHT_BRACE; }
 
+    "'"                { pushState(QUOTED_PATH_STATE); return SINGLE_QUOTE; }
     {PATH_SEG}         { return PATH_SEG; }
     "="                { pushState(VALUE_STATE); return OP_EQ; }
     ".."               { return DOTDOT; }
@@ -117,8 +120,6 @@ CHAR_SEQ=([^\"\\$]|\\.)+
     {SPACE}            { return WHITE_SPACE; }
 
     "]"                { popState(); return RIGHT_BRACKET; }
-
-    // [^]                { popState(); }
 }
 
 <ARRAY_STATE> {
@@ -149,7 +150,15 @@ CHAR_SEQ=([^\"\\$]|\\.)+
     "\""               { popState(); return DOUBLE_QUOTE; }
 
     {INPUT_TOKEN}      { return INPUT_TOKEN; }
-    {CHAR_SEQ}             { return CHAR_SEQ; }
+    {CHAR_SEQ}         { return CHAR_SEQ; }
+
+    [^]                { popState(); return BAD_CHARACTER; }
+}
+
+<QUOTED_PATH_STATE> {
+    "'"                { popState(); return SINGLE_QUOTE; }
+
+    {QUOTED_PATH_SEQ}  { return QUOTED_PATH_SEQ; }
 
     [^]                { popState(); return BAD_CHARACTER; }
 }

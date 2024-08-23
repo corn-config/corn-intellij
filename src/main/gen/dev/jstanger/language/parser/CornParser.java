@@ -241,30 +241,30 @@ public class CornParser implements PsiParser, LightPsiParser {
   // path OP_EQ value
   public static boolean pair(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "pair")) return false;
-    if (!nextTokenIs(b, PATH_SEG)) return false;
+    if (!nextTokenIs(b, "<pair>", PATH_SEG, SINGLE_QUOTE)) return false;
     boolean r;
-    Marker m = enter_section_(b);
+    Marker m = enter_section_(b, l, _NONE_, PAIR, "<pair>");
     r = path(b, l + 1);
     r = r && consumeToken(b, OP_EQ);
     r = r && value(b, l + 1);
-    exit_section_(b, m, PAIR, r);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   /* ********************************************************** */
-  // path_seg ( DOT path_seg )*
+  // path_part ( DOT path_part )*
   public static boolean path(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "path")) return false;
-    if (!nextTokenIs(b, PATH_SEG)) return false;
+    if (!nextTokenIs(b, "<path>", PATH_SEG, SINGLE_QUOTE)) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, PATH_SEG);
+    Marker m = enter_section_(b, l, _NONE_, PATH, "<path>");
+    r = path_part(b, l + 1);
     r = r && path_1(b, l + 1);
-    exit_section_(b, m, PATH, r);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // ( DOT path_seg )*
+  // ( DOT path_part )*
   private static boolean path_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "path_1")) return false;
     while (true) {
@@ -275,13 +275,39 @@ public class CornParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // DOT path_seg
+  // DOT path_part
   private static boolean path_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "path_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, DOT, PATH_SEG);
+    r = consumeToken(b, DOT);
+    r = r && path_part(b, l + 1);
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // quoted_path_seg | path_seg
+  public static boolean path_part(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "path_part")) return false;
+    if (!nextTokenIs(b, "<path part>", PATH_SEG, SINGLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, PATH_PART, "<path part>");
+    r = quoted_path_seg(b, l + 1);
+    if (!r) r = consumeToken(b, PATH_SEG);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // SINGLE_QUOTE quoted_path_seq SINGLE_QUOTE
+  public static boolean quoted_path_seg(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "quoted_path_seg")) return false;
+    if (!nextTokenIs(b, SINGLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, SINGLE_QUOTE, QUOTED_PATH_SEQ, SINGLE_QUOTE);
+    exit_section_(b, m, QUOTED_PATH_SEG, r);
     return r;
   }
 
