@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "dev.jstanger"
-version = "0.6.2"
+version = "0.7.0"
 
 repositories {
     mavenCentral()
@@ -19,13 +19,13 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version.set("2023.2")
+    version.set("2024.2")
 }
 tasks {
     patchPluginXml {
         changeNotes.set(
             """
-            Fix double-click in strings only highlighting a single character.
+            Add support for quoted keys (Corn v0.10)
             """.trimIndent()
         )
     }
