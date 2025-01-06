@@ -10,7 +10,3 @@ Language plugin for the [Corn](https://github.com/JakeStanger/corn) configuratio
   - Regenerate parser - https://plugins.jetbrains.com/docs/intellij/grammar-and-parser.html#generate-a-parser
 - Changes to lexer should me mad eto `Corn.flex`
   - Regenerate lexer - https://plugins.jetbrains.com/docs/intellij/lexer-and-parser-definition.html#generate-a-lexer-class
-
-## Attributions
-
-- Corn image taken from [Twemoji](https://twemoji.twitter.com/).
