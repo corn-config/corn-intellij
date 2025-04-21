@@ -1,6 +1,6 @@
 plugins {
-    id("org.jetbrains.intellij") version "1.13.3"
-    kotlin("jvm") version "1.7.20"
+    id("org.jetbrains.intellij.platform") version "2.5.0"
+    kotlin("jvm") version "2.1.20"
     java
 }
 
@@ -9,18 +9,21 @@ version = "0.7.0"
 
 repositories {
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 dependencies {
+    intellijPlatform {
+        intellijIdeaCommunity("2025.1")
+    }
+
     implementation(kotlin("stdlib"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
-// See https://github.com/JetBrains/gradle-intellij-plugin/
-intellij {
-    version.set("2024.2")
-}
 tasks {
     patchPluginXml {
         changeNotes.set(
