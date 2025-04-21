@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "dev.jstanger"
-version = "0.7.0"
+version = "0.7.2"
 
 repositories {
     mavenCentral()
@@ -28,7 +28,7 @@ tasks {
     patchPluginXml {
         changeNotes.set(
             """
-            Add support for quoted keys (Corn v0.10)
+            Update to latest IntelliJ version.
             """.trimIndent()
         )
     }
